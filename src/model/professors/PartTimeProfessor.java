@@ -11,10 +11,9 @@ public class PartTimeProfessor extends Professor {
 
     // With this method we can calculate the salary of the current part-time professor
     @Override
-    public void calculateSalary() {
+    public float calculateSalary() {
         float baseSalary = super.getBaseSalary();
-        float salary = baseSalary * this.activeHoursPerWeek;
-        super.setSalary(salary);
+        return baseSalary * this.activeHoursPerWeek;
     }
 
     public int getActiveHoursPerWeek() {

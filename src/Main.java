@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]) {
+        ArrayList <Professor> allProfessors = new ArrayList <Professor> ();
+        ArrayList <Student> allStudents = new ArrayList <Student> ();
+        ArrayList <Class> allClasses = new ArrayList <Class> ();
+
         PartTimeProfessor ptp1 = new PartTimeProfessor("Felipe", 2000000), ptp2 = new PartTimeProfessor("Orlando", 1500000);
         FullTimeProfessor ftp1 = new FullTimeProfessor("Roberto", 1000000), ftp2 = new FullTimeProfessor("Oscar", 3500000);
 
@@ -44,8 +48,11 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    System.out.println("Se presiono un 1");
-
+                    for (Professor professor: allProfessors) {
+                        System.out.println("Professor: " + professor.getName());
+                        System.out.println("Base Salary: " + professor.getBaseSalary());
+                        System.out.println("Salary: " + professor.calculateSalary());
+                    }
                     break;
                 case 2:
                     System.out.println("Se presiono un 2");

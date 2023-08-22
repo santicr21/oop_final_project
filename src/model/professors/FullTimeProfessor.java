@@ -12,10 +12,9 @@ public class FullTimeProfessor extends Professor {
 
     // With this method we can calculate the salary of the current full time professor
     @Override
-    public void calculateSalary() {
+    public float calculateSalary() {
         float baseSalary = super.getBaseSalary();
-        float salary = baseSalary * experienceYears * 110/100;
-        super.setSalary(salary);
+        return baseSalary * experienceYears * 110/100;
     }
 
     public int getExperienceYears() {
