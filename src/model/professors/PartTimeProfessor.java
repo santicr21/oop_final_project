@@ -12,4 +12,12 @@ public class PartTimeProfessor extends Professor {
         float salary = baseSalary * this.activeHoursPerWeek;
         super.setSalary(salary);
     }
+
+    public int getActiveHoursPerWeek() {
+        return activeHoursPerWeek;
+    }
+
+    public void setActiveHoursPerWeek(int activeHoursPerWeek) {
+        this.activeHoursPerWeek = activeHoursPerWeek;
+    }
 }

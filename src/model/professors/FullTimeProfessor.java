@@ -13,4 +13,12 @@ public class FullTimeProfessor extends Professor {
         float salary = baseSalary * experienceYears * 110/100;
         super.setSalary(salary);
     }
+
+    public int getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(int experienceYears) {
+        this.experienceYears = experienceYears;
+    }
 }
