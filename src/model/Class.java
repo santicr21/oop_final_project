@@ -9,4 +9,43 @@ public class Class {
     private Professor teacher;
     private String assignedClassroom;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
+    }
+
+    public Professor getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Professor teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getAssignedClassroom() {
+        return assignedClassroom;
+    }
+
+    public void setAssignedClassroom(String assignedClassroom) {
+        this.assignedClassroom = assignedClassroom;
+    }
 }
