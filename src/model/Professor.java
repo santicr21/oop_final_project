@@ -5,6 +5,11 @@ public abstract class Professor {
     private float salary;
     private float baseSalary;
 
+    public Professor(String name, float baseSalary) {
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+
     public abstract void calculateSalary();
 
     public String getName() {

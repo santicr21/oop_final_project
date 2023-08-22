@@ -9,6 +9,14 @@ public class Class {
     private Professor teacher;
     private String assignedClassroom;
 
+    public Class(int id, String name, ArrayList<Student> students, Professor teacher, String assignedClassroom) {
+        this.id = id;
+        this.name = name;
+        this.students = students;
+        this.teacher = teacher;
+        this.assignedClassroom = assignedClassroom;
+    }
+
     public int getId() {
         return id;
     }

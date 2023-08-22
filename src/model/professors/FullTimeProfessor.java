@@ -6,6 +6,10 @@ public class FullTimeProfessor extends Professor {
 
     private int experienceYears;
 
+    public FullTimeProfessor(String name, float baseSalary) {
+        super(name, baseSalary);
+    }
+
     // With this method we can calculate the salary of the current full time professor
     @Override
     public void calculateSalary() {
