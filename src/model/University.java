@@ -3,9 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class University {
-    private ArrayList <Professor> teachers;
-    private ArrayList <Student> students;
-    private ArrayList <Class> classes;
+    private ArrayList <Professor> teachers = new ArrayList<Professor>();
+    private ArrayList <Student> students = new ArrayList<Student>();
+    private ArrayList <Class> classes = new ArrayList<Class>();
 
     public ArrayList<Professor> getTeachers() {
         return teachers;

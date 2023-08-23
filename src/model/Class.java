@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Class {
     private int id;
     private String name;
-    private ArrayList<Student> students;
+    private ArrayList<Student> students = new ArrayList<Student> ();
     private Professor teacher;
     private String assignedClassroom;
+
+    public Class() {}
 
     public Class(int id, String name, ArrayList<Student> students, Professor teacher, String assignedClassroom) {
         this.id = id;

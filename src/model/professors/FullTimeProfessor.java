@@ -6,8 +6,9 @@ public class FullTimeProfessor extends Professor {
 
     private int experienceYears;
 
-    public FullTimeProfessor(String name, float baseSalary) {
-        super(name, baseSalary);
+    public FullTimeProfessor(String name, float baseSalary, int experienceYears, int professorId) {
+        super(name, baseSalary, professorId);
+        this.experienceYears = experienceYears;
     }
 
     // With this method we can calculate the salary of the current full time professor

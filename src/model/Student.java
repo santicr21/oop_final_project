@@ -6,6 +6,13 @@ public class Student {
     private String name;
     private int age;
 
+    public Student() {}
+
+    @Override
+    public String toString() {
+        return "Id: " + this.id + "\n" + "Name: " + this.name + "\nAge: " + this.age + "\n";
+    }
+
     public Student(int id, String name, int age){
         this.id = id;
         this.name = name;
