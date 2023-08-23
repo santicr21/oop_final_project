@@ -6,6 +6,11 @@ public class FullTimeProfessor extends Professor {
 
     private int experienceYears;
 
+    @Override
+    public String toString() {
+        return "Professor's id: " + super.getProfessorId() + "\nProfessor's name: " + super.getName() + "\nProfessor's base salary: " + super.getBaseSalary() + "\nSalary: " + this.calculateSalary() + "\nExperience in years: " + this.experienceYears;
+    }
+
     public FullTimeProfessor(String name, float baseSalary, int experienceYears, int professorId) {
         super(name, baseSalary, professorId);
         this.experienceYears = experienceYears;
