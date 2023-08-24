@@ -8,7 +8,7 @@ public class FullTimeProfessor extends Professor {
 
     @Override
     public String toString() {
-        return "Professor's id: " + super.getProfessorId() + "Professor's name: " + super.getName() + " Professor's base salary: " + super.getBaseSalary() + " Salary: " + this.calculateSalary() + " Experience in years: " + this.experienceYears;
+        return "Professor's id: " + super.getProfessorId() + " Professor's name: " + super.getName() + " Professor's base salary: " + super.getBaseSalary() + " Salary: " + this.calculateSalary() + " Experience in years: " + this.experienceYears;
     }
 
     public FullTimeProfessor(String name, float baseSalary, int experienceYears, int professorId) {
