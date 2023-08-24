@@ -11,6 +11,252 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    // External functions
+    
+
+
+    // Print all professors data
+    public static void printProfessorsData(ArrayList<Professor> allProfessors) {
+        // Iterate through all professors and print its data using toString method.
+        for (Professor professor: allProfessors) {
+            System.out.println(professor);
+            System.out.println();
+        }
+    }
+
+    // Print classes indicating its id.
+    public static void printClasses(ArrayList <Class> allClasses) {
+
+        int classOption = 0;
+        boolean classExists = false;
+        Scanner scan = new Scanner(System.in);
+
+        // Printing all classes id's
+        for (Class cls: allClasses) {
+            System.out.println("Class with id: " + cls.getId());
+        }
+
+        // Submenu to select the class id that you may want to know all its info.
+        while(classOption >= 0) {
+            System.out.println("If you want to get the data of a class, write its id, otherwise write -1: ");
+            try{
+                classOption = scan.nextInt();
+            }
+            catch (InputMismatchException ex) {
+                System.out.println("You must write an integer number, try again");
+                break;
+            }
+            // Printing all classes with its attributes
+            for (Class cls : allClasses) {
+                if(cls.getId() == classOption){
+                    classExists = true;
+                    System.out.println("Class id: " + cls.getId());
+                    System.out.println("Class name: " + cls.getName());
+                    System.out.println("Class students: " + cls.getStudents());
+                    System.out.println("Class teacher: \n" + cls.getTeacher());
+                    System.out.println("Assigned classroom: " + cls.getAssignedClassroom());
+                }
+            }
+
+            if (!classExists){
+                System.out.println("Class with that id does not exists, try again");
+                break;
+            }
+
+            classExists = false;
+        }
+    }
+
+    static void createStudent(ArrayList<Student> allStudents, ArrayList<Class> allClasses, int studentsId) {
+
+        String newStudentName;
+        int newStudentAge, classId;
+        boolean classExists = false;
+        Scanner scan = new Scanner(System.in);
+        scan.nextLine();
+
+        // Asking for name, age and class id to be added the new student
+        System.out.println("Write the student name: ");
+        newStudentName = scan.nextLine();
+
+        System.out.println("Write the student age: ");
+        try{
+            newStudentAge = scan.nextInt();
+        }
+        catch (InputMismatchException ex) {
+            System.out.println("You must write an integer number, try again!");
+            return;
+        }
+
+        try {
+            System.out.println("Write the class id to be added: ");
+            classId = scan.nextInt();
+        }
+        catch (InputMismatchException ex) {
+            System.out.println("You must write an integer number, try again!");
+            return;
+        }
+
+        // Adding the new student to the db
+        Student newStudent = new Student(studentsId++, newStudentName, newStudentAge);
+        allStudents.add(newStudent);
+
+        // Getting the class that matches its id with the requested to add the student to that class
+        for (Class cls: allClasses) {
+            if (cls.getId() == classId) {
+                ArrayList <Student> currentClassStudents = cls.getStudents();
+                currentClassStudents.add(newStudent);
+                cls.setStudents(currentClassStudents);
+                classExists = true;
+            }
+        }
+
+        if (!classExists) {
+            System.out.println("That class with that id does not exists, try again!");
+            studentsId--;
+        }
+        else {
+            System.out.println("Student added successfully");
+        }
+    }
+
+    public static void createClass(ArrayList <Student> allStudents, ArrayList <Professor> allProfessors, ArrayList <Class> allClasses, int classesId) {
+        Scanner scan = new Scanner(System.in);
+        scan.nextLine();
+        String newClassName;
+        int professorId;
+        int numberOfStudents;
+        int studentId;
+        boolean studentExists = false, professorExists = false;
+        ArrayList <Student> classStudents = new ArrayList <Student>();
+        boolean exceptionReached = false;
+
+        // Ask for the class name
+        System.out.println("Write the class name: ");
+        newClassName = scan.nextLine();
+
+        // Ask for the number of students to add in the class
+        System.out.println("Write the number of students that will be in that class, make sure that there are enough students! and at least 1 ");
+        try{
+            numberOfStudents = scan.nextInt();
+            if (numberOfStudents > allStudents.size()) {
+                System.out.println("There are more students than registered, try again");
+                return;
+            }
+            else if (numberOfStudents <= 0) {
+                System.out.println("The integer number must be greater or equal than 1!");
+                return;
+            }
+        }
+        catch (InputMismatchException ex) {
+            System.out.println("You must write an integer number, try again!");
+            return;
+        }
+
+        // Request the student id to be added to the class
+        for (int i = 0; i < numberOfStudents; i++) {
+            System.out.println((1 + i) + " Write the student id: ");
+            try {
+                studentId = scan.nextInt();
+            }
+            catch (InputMismatchException ex) {
+                System.out.println("You must write an integer number, try again!");
+                return;
+            }
+
+            Student studentToBeInClass = new Student();
+
+            // Search for the student who matches with the requested id
+            for (Student student: allStudents) {
+                if (student.getId() == studentId) {
+                    studentToBeInClass = student;
+                    studentExists = true;
+                    classStudents.add(studentToBeInClass);
+                }
+            }
+
+            if(!studentExists) {
+                System.out.println("Student with that id does not exist, try again!");
+                return;
+            }
+
+            studentExists = false;
+        }
+
+        scan.nextLine();
+
+        System.out.println("Write the assigned classroom id: ");
+        String classroomId = scan.nextLine();
+
+        //Ask for the teacher id that will be assigned to this class
+        System.out.println("Write the teacher id that will be teaching: ");
+        try{
+            professorId = scan.nextInt();
+        }
+        catch (InputMismatchException ex) {
+            System.out.println("You must write an integer number, try again!");
+            return;
+        }
+
+        // Search for the professor who matches the requested id
+        for (Professor professor: allProfessors) {
+            if (professor.getProfessorId() == professorId) {
+                professorExists = true;
+                // Create the new class and add it to the db
+                Class newClass = new Class(classesId++, newClassName, classStudents, professor, classroomId);
+                allClasses.add(newClass);
+            }
+        }
+
+        if (!professorExists) {
+            System.out.println("Professor does not exist, try again!");
+            return;
+        }
+
+        System.out.println("Class registered!");
+    }
+
+    public static void listStudentsClassesById (ArrayList <Class> allClasses) {
+
+        Scanner scan = new Scanner(System.in);
+        int studentId;
+
+        // Ask for the student id
+        System.out.println("Write the student id: ");
+        try {
+            studentId = scan.nextInt();
+        }
+        catch (InputMismatchException ex) {
+            System.out.println("You must write an integer number, try again!");
+            return;
+        }
+
+        ArrayList <Student> studentsInCurrentClass = new ArrayList <Student>();
+
+        // Iterate over all classes to find the student
+        for (Class cls: allClasses) {
+            boolean isInClass = false;
+            studentsInCurrentClass = cls.getStudents();
+
+            // Iterate the students of that class to see if any of these match with the requested student id.
+            for (Student student: studentsInCurrentClass) {
+                if (student.getId() == studentId) {
+                    isInClass = true;
+                }
+            }
+
+            if (isInClass) {
+                System.out.println("Class id: " + cls.getId());
+                System.out.println("Class name: " + cls.getName());
+                System.out.println("Class students: " + cls.getStudents());
+                System.out.println("Class teacher: " + cls.getTeacher());
+                System.out.println("Class assigned: " + cls.getAssignedClassroom());
+                System.out.println();
+            }
+        }
+
+    }
+
     public static void main(String args[]) {
         //Classes, professors and students id
         int classesId = 0, professorsId = 0, studentsId = 0;
@@ -96,241 +342,20 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    for (Professor professor: allProfessors) {
-                        System.out.println(professor);
-                        System.out.println();
-                    }
-
+                    printProfessorsData (allProfessors);
                     break;
                 case 2:
-                    int classOption = 0;
-                    boolean classExists = false;
-
-                    // Printing all classes id's
-                    for (Class cls: allClasses) {
-                        System.out.println("Class with id: " + cls.getId());
-                    }
-
-                    // Submenu to select the class id that you may want to know all its info.
-                    while(classOption >= 0) {
-                        System.out.println("If you want to get the data of a class, write its id, otherwise write -1: ");
-                        try{
-                            classOption = scan.nextInt();
-                        }
-                        catch (InputMismatchException ex) {
-                            System.out.println("You must write an integer number, try again");
-                            break;
-                        }
-                        // Printing all classes with its attributes
-                        for (Class cls : allClasses) {
-                            if(cls.getId() == classOption){
-                                classExists = true;
-                                System.out.println("Class id: " + cls.getId());
-                                System.out.println("Class name: " + cls.getName());
-                                System.out.println("Class students: " + cls.getStudents());
-                                System.out.println("Class teacher: \n" + cls.getTeacher());
-                                System.out.println("Assigned classroom: " + cls.getAssignedClassroom());
-                            }
-                        }
-
-                        if (!classExists){
-                            System.out.println("Class with that id does not exists, try again");
-                            break;
-                        }
-
-                        classExists = false;
-                    }
-
+                    printClasses (allClasses);
                     break;
                 case 3:
-                    String newStudentName;
-                    int newStudentAge, classId;
-                    classExists = false;
-                    scan.nextLine();
-
-                    // Asking for name, age and class id to be added the new student
-                    System.out.println("Write the student name: ");
-                    newStudentName = scan.nextLine();
-
-                    System.out.println("Write the student age: ");
-                    try{
-                        newStudentAge = scan.nextInt();
-                    }
-                    catch (InputMismatchException ex) {
-                        System.out.println("You must write an integer number, try again!");
-                        break;
-                    }
-
-                    try {
-                        System.out.println("Write the class id to be added: ");
-                        classId = scan.nextInt();
-                    }
-                    catch (InputMismatchException ex) {
-                        System.out.println("You must write an integer number, try again!");
-                        break;
-                    }
-
-                    // Adding the new student to the db
-                    Student newStudent = new Student(studentsId++, newStudentName, newStudentAge);
-                    allStudents.add(newStudent);
-
-                    // Getting the class that matches its id with the requested to add the student to that class
-                    for (Class cls: allClasses) {
-                        if (cls.getId() == classId) {
-                            ArrayList <Student> currentClassStudents = cls.getStudents();
-                            currentClassStudents.add(newStudent);
-                            cls.setStudents(currentClassStudents);
-                            classExists = true;
-                        }
-                    }
-
-                    if (!classExists) {
-                        System.out.println("That class with that id does not exists, try again!");
-                        studentsId--;
-                    }
-                    else {
-                        System.out.println("Student added successfully");
-                    }
-
+                    createStudent (allStudents, allClasses, studentsId);
                     break;
                 case 4:
-                    scan.nextLine();
-                    String newClassName;
-                    int professorId;
-                    int numberOfStudents;
-                    int studentId;
-                    boolean studentExists = false, professorExists = false;
-                    ArrayList <Student> classStudents = new ArrayList <Student>();
-                    boolean exceptionReached = false;
-
-                    // Ask for the class name
-                    System.out.println("Write the class name: ");
-                    newClassName = scan.nextLine();
-
-                    // Ask for the number of students to add in the class
-                    System.out.println("Write the number of students that will be in that class, make sure that there are enough students! and at least 1 ");
-                    try{
-                        numberOfStudents = scan.nextInt();
-                        if (numberOfStudents > allStudents.size()) {
-                            System.out.println("There are more students than registered, try again");
-                            break;
-                        }
-                        else if (numberOfStudents <= 0) {
-                            System.out.println("The integer number must be greater or equal than 1!");
-                            break;
-                        }
-                    }
-                    catch (InputMismatchException ex) {
-                        System.out.println("You must write an integer number, try again!");
-                        break;
-                    }
-
-                    // Request the student id to be added to the class
-                    for (int i = 0; i < numberOfStudents; i++) {
-                        System.out.println((1 + i) + " Write the student id: ");
-                        try {
-                            studentId = scan.nextInt();
-                        }
-                        catch (InputMismatchException ex) {
-                            System.out.println("You must write an integer number, try again!");
-                            exceptionReached = true;
-                            break;
-                        }
-
-                        Student studentToBeInClass = new Student();
-
-                        // Search for the student who matches with the requested id
-                        for (Student student: allStudents) {
-                            if (student.getId() == studentId) {
-                                studentToBeInClass = student;
-                                studentExists = true;
-                                classStudents.add(studentToBeInClass);
-                            }
-                        }
-
-                        if(!studentExists) {
-                            System.out.println("Student with that id does not exist, try again!");
-                            exceptionReached = true;
-                            break;
-                        }
-
-                        studentExists = false;
-                    }
-
-                    if (exceptionReached) {
-                        break;
-                    }
-
-                    scan.nextLine();
-
-                    System.out.println("Write the assigned classroom id: ");
-                    String classroomId = scan.nextLine();
-
-                    //Ask for the teacher id that will be assigned to this class
-                    System.out.println("Write the teacher id that will be teaching: ");
-                    try{
-                        professorId = scan.nextInt();
-                    }
-                    catch (InputMismatchException ex) {
-                        System.out.println("You must write an integer number, try again!");
-                        break;
-                    }
-
-                    // Search for the professor who matches the requested id
-                    for (Professor professor: allProfessors) {
-                        if (professor.getProfessorId() == professorId) {
-                            professorExists = true;
-                            // Create the new class and add it to the db
-                            Class newClass = new Class(classesId++, newClassName, classStudents, professor, classroomId);
-                            allClasses.add(newClass);
-                        }
-                    }
-
-                    if (!professorExists) {
-                        System.out.println("Professor does not exist, try again!");
-                        break;
-                    }
-
-                    System.out.println("Class registered!");
-
+                    createClass (allStudents, allProfessors, allClasses, classesId);
                     break;
                 case 5:
-                    // Ask for the student id
-                    System.out.println("Write the student id: ");
-                    try {
-                        studentId = scan.nextInt();
-                    }
-                    catch (InputMismatchException ex) {
-                        System.out.println("You must write an integer number, try again!");
-                        break;
-                    }
-
-                    ArrayList <Student> studentsInCurrentClass = new ArrayList <Student>();
-
-                    // Iterate over all classes to find the student
-                    for (Class cls: allClasses) {
-                        boolean isInClass = false;
-                        studentsInCurrentClass = cls.getStudents();
-
-                        // Iterate the students of that class to see if any of these match with the requested student id.
-                        for (Student student: studentsInCurrentClass) {
-                            if (student.getId() == studentId) {
-                                isInClass = true;
-                            }
-                        }
-
-                        if (isInClass) {
-                            System.out.println("Class id: " + cls.getId());
-                            System.out.println("Class name: " + cls.getName());
-                            System.out.println("Class students: " + cls.getStudents());
-                            System.out.println("Class teacher: " + cls.getTeacher());
-                            System.out.println("Class assigned: " + cls.getAssignedClassroom());
-                            System.out.println();
-                        }
-
-                    }
+                    listStudentsClassesById(allClasses);
                     break;
-
                 case 6:
                     System.out.println("Good bye :)!");
                     break;
