@@ -7,7 +7,7 @@ public class PartTimeProfessor extends Professor {
 
     @Override
     public String toString() {
-        return "Professor's id: " + super.getProfessorId() + "\nProfessor's name: " + super.getName() + "\nProfessor's base salary: " + super.getBaseSalary() + "\nSalary: " + this.calculateSalary() + "\nActive years per week: " + this.activeHoursPerWeek;
+        return "Professor's id: " + super.getProfessorId() + " Professor's name: " + super.getName() + " Professor's base salary: " + super.getBaseSalary() + " Salary: " + this.calculateSalary() + " Active years per week: " + this.activeHoursPerWeek;
     }
 
     public PartTimeProfessor(String name, float baseSalary, int activeHoursPerWeek, int professorId) {
