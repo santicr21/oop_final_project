@@ -1,14 +1,57 @@
+package runner;
 import model.Professor;
 import model.Student;
 import model.University;
-import model.professors.FullTimeProfessor;
-import model.professors.PartTimeProfessor;
 import model.Class;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    public static void main(String args[]) {
+        // All university (professors, students and classes, students id, professors id, and classes id)
+        Init initVars = new Init();
+        University university = initVars.initVariables();
+
+        System.out.println("Welcome to the University tracking system!, type the option you want to use:");
+        int option = 1;
+        Scanner scan;
+
+        while(option >= 1 && option < 6) {
+            scan = new Scanner(System.in);
+            System.out.println("1 to show all professors data.");
+            System.out.println("2 to show the classes id.");
+            System.out.println("3 to register a new student and add it to a class.");
+            System.out.println("4 to register a new class.");
+            System.out.println("5 to see the classes of a student by his id.");
+            System.out.println("6 to exit the program.");
+
+            option = catchException(scan);
+            if(option == -1)
+                break;
+
+            switch (option) {
+                case 1:
+                    printProfessorsData (university);
+                    break;
+                case 2:
+                    printClasses (university);
+                    break;
+                case 3:
+                    createStudent (university);
+                    break;
+                case 4:
+                    createClass (university);
+                    break;
+                case 5:
+                    listStudentsClassesById (university);
+                    break;
+                case 6:
+                    System.out.println("Good bye :)!");
+                    break;
+            }
+        }
+    };
 
     public static int catchException (Scanner scan) {
         int number = -1;
@@ -22,9 +65,9 @@ public class Main {
     }
 
     // Print all professors data
-    public static void printProfessorsData(ArrayList<Professor> allProfessors) {
+    public static void printProfessorsData(University university) {
         // Iterate through all professors and print its data using toString method.
-        for (Professor professor: allProfessors) {
+        for (Professor professor: university.getProfessors()) {
             System.out.println(professor);
             System.out.println();
         }
@@ -175,6 +218,7 @@ public class Main {
         System.out.println("Class registered!");
     }
 
+    //This function list the classes of a student, given his id.
     public static void listStudentsClassesById (University university) {
         Scanner scan = new Scanner(System.in);
         int studentId;
@@ -202,47 +246,4 @@ public class Main {
         }
 
     }
-
-    public static void main(String args[]) {
-
-
-        System.out.println("Welcome to the University tracking system!, type the option you want to use:");
-        int option = 1;
-        Scanner scan;
-
-        while(option >= 1 && option < 6) {
-            scan = new Scanner(System.in);
-            System.out.println("1 to show all professors data.");
-            System.out.println("2 to show the classes id.");
-            System.out.println("3 to register a new student and add it to a class.");
-            System.out.println("4 to register a new class.");
-            System.out.println("5 to see the classes of a student by his id.");
-            System.out.println("6 to exit the program.");
-
-            option = catchException(scan);
-            if(option == -1)
-                break;
-
-            switch (option) {
-                case 1:
-                    printProfessorsData (allProfessors);
-                    break;
-                case 2:
-                    printClasses (university);
-                    break;
-                case 3:
-                    createStudent (university);
-                    break;
-                case 4:
-                    createClass (university);
-                    break;
-                case 5:
-                    listStudentsClassesById (university);
-                    break;
-                case 6:
-                    System.out.println("Good bye :)!");
-                    break;
-            }
-        }
-    };
 }
