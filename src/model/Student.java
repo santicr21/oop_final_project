@@ -10,7 +10,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Id: " + this.id + "\n" + "Name: " + this.name + "\nAge: " + this.age + "\n";
+        return "Id: " + this.id + " Name: " + this.name + " Age: " + this.age;
     }
 
     public Student(int id, String name, int age){
