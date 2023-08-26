@@ -19,6 +19,17 @@ public class Class {
         this.assignedClassroom = assignedClassroom;
     }
 
+    // Search student in current class.
+    public Student studentInClass(int studentId) {
+        Student studentMatched = null;
+        for(Student student: this.students) {
+            if (student.getId() == studentId) {
+                studentMatched = student;
+            }
+        }
+        return studentMatched;
+    }
+
     public int getId() {
         return id;
     }
