@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // All university (professors, students and classes, students id, professors id, and classes id)
         Init initVars = new Init();
         University university = initVars.initVariables();
@@ -51,8 +51,9 @@ public class Main {
                     break;
             }
         }
-    };
+    }
 
+    // This function It's for catching exceptions when reading.
     public static int catchException (Scanner scan) {
         int number = -1;
         try {
@@ -85,14 +86,16 @@ public class Main {
 
         // Submenu to select the class id that you may want to know all its info.
         while(classIdOption >= 0) {
+            // Reading the class id to display all the class info
             System.out.println("If you want to get the data of a class, write its id, otherwise write -1: ");
             classIdOption = catchException(scan);
             if(classIdOption == -1)
                 break;
 
-            // Printing all classes with its attributes
+            // See if the given class id, exists
             Class cls = university.classExists(classIdOption);
 
+            // Printing all classes with its attributes if exists
             if (cls != null) {
                 System.out.println("Class id: " + cls.getId());
                 System.out.println("Class name: " + cls.getName());
@@ -153,8 +156,7 @@ public class Main {
         int professorId; // The professor id that will be teaching in that class
         int numberOfStudents; // The number of students that the class will have
         int studentId; // The student id that will be in the class (this will be asked for each number of student)
-        boolean professorExists = false; // Auxiliary variable to see if a professor exists
-        ArrayList <Student> classStudents = new ArrayList <Student>(); // Students list of the new class
+        ArrayList <Student> classStudents = new ArrayList <>(); // Students list of the new class
 
         // Ask for the class name
         System.out.println("Write the class name: ");
@@ -184,6 +186,7 @@ public class Main {
 
             // Search for the student who matches with the requested id
             Student student = university.studentExists(studentId);
+            // If exists, add it to the current class object, if not, exit because the given info it's wrong.
             if (student != null){
                 classStudents.add(student);
             }
@@ -204,6 +207,8 @@ public class Main {
             return;
 
         Professor professor = university.professorExists(professorId); // Search the professor
+
+        // If professor, and students exists, create the new class
         if (professor != null) {
             int classesId = university.getClassesId();
             Class newClass = new Class(classesId, newClassName, classStudents, professor, classroomId);
@@ -222,7 +227,6 @@ public class Main {
     public static void listStudentsClassesById (University university) {
         Scanner scan = new Scanner(System.in);
         int studentId;
-        ArrayList <Student> studentsInCurrentClass;
 
         // Ask for the student id
         System.out.println("Write the student id: ");
@@ -232,8 +236,6 @@ public class Main {
 
         // Iterate over all classes to find the student
         for (Class cls: university.getClasses()) {
-            studentsInCurrentClass = cls.getStudents();
-
             Student student = cls.studentInClass(studentId); // Search for the student given the student id
             if (student != null) {
                 System.out.println("Class id: " + cls.getId());
