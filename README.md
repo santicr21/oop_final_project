@@ -11,7 +11,7 @@ This project has all functionalities that the project describes.
 1. Make sure you have java 8 installed.
 2. Try to use intellij or eclipse editor for running the project easily.
 3. Open the project folder `oop_final_project` using the code editor.
-4. Go to `src/runner/Main.java`.
+4. Go to `src/runner/Main.java` on the editor.
 5. Click on the run green icon.
 
 
